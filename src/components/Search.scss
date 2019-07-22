@@ -43,6 +43,12 @@
   width: 16px;
   height: 16px;
   vertical-align: middle;
+  fill: #999999;
+  transition: fill 150ms ease-in-out;
+
+  &:hover {
+    fill: #777777;
+  }
 }
 
 .search__input {

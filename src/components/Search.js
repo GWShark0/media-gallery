@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import searchIcon from '../icons/search.svg';
-import resetIcon from '../icons/x.svg';
+import { ReactComponent as SearchIcon } from '../icons/search.svg';
+import { ReactComponent as ResetIcon } from '../icons/x.svg';
 
 import './Search.scss';
 
@@ -33,7 +33,7 @@ function Search(props) {
       data-focused={focused}
     >
       <button className="search__button-search" type="submit">
-        <img className="search__icon-search" src={searchIcon} alt="" />
+        <SearchIcon className="search__icon-search" />
       </button>
       <input
         className="search__input"
@@ -48,7 +48,7 @@ function Search(props) {
       />
       {!!query && (
         <button className="search__button-reset" type="reset">
-          <img className="search__icon-reset" src={resetIcon} alt="" />
+          <ResetIcon className="search__icon-reset" />
         </button>
       )}
     </form>
