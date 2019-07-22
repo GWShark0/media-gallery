@@ -1,8 +1,11 @@
 const express = require('express');
-const app = express();
-const PORT = 4000;
-
+const morgan = require('morgan');
 const api = require('./api');
+
+const PORT = 4000;
+const app = express();
+
+app.use(morgan('dev'));
 
 app.get('/', (req, res) => res.json({ message: 'Hello world!' }));
 
