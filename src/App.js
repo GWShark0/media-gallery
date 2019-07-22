@@ -1,24 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import Search from './components/Search';
+import Thumb from './components/Thumb';
+import fetchData from './util/fetchData';
+import takeFive from './util/takeFive';
+
+import './App.scss';
 
 function App() {
+  const [query, setQuery] = useState('dog');
+  const [results, setResults] = useState([]);
+
+  useEffect(() => {
+    fetchData(query, setResults);
+  }, [query]);
+
+  const five = takeFive(results);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Search
+        onSubmit={query => setQuery(query)}
+        defaultValue={query}
+      />
+      <div>
+        {five.map(image => {
+          const { id } = image;
+          return (<Thumb {...image} key={id} />);
+        })}
+      </div>
     </div>
   );
 }
