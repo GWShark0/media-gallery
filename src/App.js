@@ -21,7 +21,6 @@ function App() {
       <Search
         query={query}
         onSubmit={query => setQuery(query)}
-        onReset={() => setQuery('')}
       />
       <div>
         {five.map(image => {
