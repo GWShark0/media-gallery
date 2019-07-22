@@ -26,6 +26,9 @@ const api = {
   work,
 };
 
-module.exports = {
-  get: search => api[search] || [],
-};
+function get(query = '') {
+  const key = query.toLowerCase();
+  return api[key] || [];
+}
+
+module.exports = { get };

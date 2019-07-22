@@ -7,7 +7,7 @@ import takeFive from './util/takeFive';
 import './App.scss';
 
 function App() {
-  const [query, setQuery] = useState('dog');
+  const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
 
   useEffect(() => {
@@ -19,8 +19,9 @@ function App() {
   return (
     <div className="app">
       <Search
+        query={query}
         onSubmit={query => setQuery(query)}
-        defaultValue={query}
+        onReset={() => setQuery('')}
       />
       <div>
         {five.map(image => {
