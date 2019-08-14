@@ -1,68 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { ReactComponent as SearchIcon } from '../icons/search.svg';
-import { ReactComponent as ResetIcon } from '../icons/x.svg';
+import SearchBar from './SearchBar';
+import Thumb from './Thumb';
+import fetchData from '../util/fetchData';
+import takeFive from '../util/takeFive';
 
 import './Search.scss';
 
 function Search(props) {
-  const { onSubmit, onReset } = props;
+  const { onSelectImage } = props;
   const [query, setQuery] = useState('');
-  const [focused, setFocused] = useState(false);
+  const [results, setResults] = useState([]);
 
   useEffect(() => {
-    setQuery(props.query);
-  }, [props.query]);
+    fetchData(query, setResults);
+  }, [query]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    onSubmit(query);
-  };
-
-  const handleReset = (event) => {
-    event.target.query.focus();
-    setQuery('');
-    onReset();
-  };
+  const five = takeFive(results);
 
   return (
-    <form
-      className="search"
-      onSubmit={handleSubmit}
-      onReset={handleReset}
-      data-focused={focused}
-    >
-      <button className="search__button-search" type="submit">
-        <SearchIcon className="search__icon-search" />
-      </button>
-      <input
-        className="search__input"
-        placeholder={'Search for "dog"'}
-        type="text"
-        name="query"
-        autoComplete="off"
-        value={query}
-        onChange={event => setQuery(event.target.value)}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
+    <div className="search">
+      <SearchBar
+        query={query}
+        onSubmit={query => setQuery(query)}
       />
-      {!!query && (
-        <button className="search__button-reset" type="reset">
-          <ResetIcon className="search__icon-reset" />
-        </button>
-      )}
-    </form>
+      <div>
+        {five.map(image => {
+          const { id } = image;
+          return (
+            <Thumb
+              {...image}
+              onClick={() => onSelectImage(image)}
+              key={id}
+            />
+          );
+        })}
+      </div>
+    </div>
   );
 }
-
-Search.propTypes = {
-  onSubmit: PropTypes.func,
-  onReset: PropTypes.func,
-};
-
-Search.defaultProps = {
-  onSubmit: () => {},
-  onReset: () => {},
-};
 
 export default Search;

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './Thumb.scss';
 
 function Thumb(props) {
-  const { description, urls } = props;
+  const { description, urls, onClick } = props;
   const { thumb } = urls;
 
   return (
@@ -12,6 +12,8 @@ function Thumb(props) {
       className="thumb"
       src={thumb}
       alt={description}
+      onClick={onClick}
+      draggable="false"
     />
   );
 }
